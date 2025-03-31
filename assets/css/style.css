@@ -8,14 +8,14 @@ html {
     align-items: center;
     min-height: 100vh;
     font-family: 'Jost', sans-serif;
-    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+    background: #e9ebf0;
 }
 
 .main {
     width: 350px;
     height: 550px;
     border-radius: 10px;
-    box-shadow: 5px 20px 50px #000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
 }
@@ -27,7 +27,7 @@ html {
     padding: 40px;
     box-sizing: border-box;
     text-align: center;
-    background: #eee;
+    background: #fff;
     border-radius: 10px;
 }
 
@@ -40,11 +40,13 @@ html {
 }
 
 .login input {
+	font-family: 'Jost', sans-serif;
     width: 80%;
     height: 40px;
     margin: 10px 0;
     padding: 10px;
-    border: none;
+	background-color: #f5f5f5;
+    border: 1px solid #e8e8e8;
     border-radius: 5px;
     outline: none;
     box-sizing: border-box;
@@ -59,7 +61,7 @@ html {
     width: 80%;
     height: 40px;
     margin-top: 20px;
-    background: #573b8a;
+    background: #1f1c2e;
     color: #fff;
     font-size: 1em;
     font-weight: bold;
@@ -70,7 +72,7 @@ html {
 }
 
 .login button:hover {
-    background: #6d44b8;
+    background: #243244;
 }
 
 .msg-errore {
@@ -96,7 +98,7 @@ html {
 
 .form-container h1,
 h2 {
-    color: #573b8a;
+    color: #1f1c2e;
     margin-bottom: 30px;
 }
 
@@ -187,12 +189,12 @@ input::placeholder {
 }
 
 .password-container input:focus {
-    border-color: #573b8a;
+    border-color: #243244;
 }
 
 .accedi-link {
     cursor: pointer;
-    color: #573b8a;
+    color: #1f1c2e;
     position: relative;
     display: inline-block;
     font-size: 14px;
@@ -206,20 +208,18 @@ input::placeholder {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: #6d44b8;
+    background-color: #1f1c2e;
     transition: width 0.3s ease;
 }
 
 .accedi-link:hover {
-    color: #6d44b8;
+    color: #1f1c2e;
 }
 
 .accedi-link:hover::after {
     width: 100%;
 }
 
-
-/* Stile per l'icona occhio */
 .pass-icona {
     position: absolute;
     top: 50%;
@@ -227,12 +227,13 @@ input::placeholder {
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 16px;
-    color: #573b8a;
+    color: #1f1c2e;
     user-select: none;
+	transition: .3s ease;
 }
 
 .pass-icona:hover {
-    color: #6d44b8;
+    color: #243244;
 }
 
 .strength-bar {
@@ -298,4 +299,48 @@ input::placeholder {
 .input-container.show, .password-container.show {
     opacity: 1;
     transform: translateY(0);
+}
+
+
+.login-background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-image: url('../../assets/img/login-friend.svg');
+    background-repeat: no-repeat;
+    background-position: center 40%;
+    background-size: 60%;
+    z-index: -1;
+}
+
+.login-payoff {
+    position: absolute;
+    bottom: 15%;
+    right: 0;
+    width: 50%;
+    text-align: center;
+    color: #1f1c2e;
+    font-size: 18px;
+    line-height: 1.6;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.login-payoff strong {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 960px) {
+    .login-background {
+        opacity: 0.1;
+        width: 100%;
+    }
+    
+    .login-payoff {
+        display: none;
+    }
 }

@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (isRegister) {
             formTitle.innerText = "Registrati ora";
-            document.title = "LeadAI - Registrati ora"; // Aggiorna il titolo della pagina
+            document.title = "LeadAI - Registrati ora";
 
             loginFields.classList.add("hidden");
             loginFields.classList.remove("active");

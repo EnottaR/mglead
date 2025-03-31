@@ -12,32 +12,29 @@ if (!isset($_SESSION['loggedin']) || !isset($_SESSION['user_id'])) {
 $client_id = $_SESSION['user_id'];
 $data = json_decode(file_get_contents('php://input'), true);
 
-if (!empty($data['email'])) {
-    $email = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(["status" => "error", "message" => "⚠️ Email non valida."]);
-        exit;
-    }
-
-    $stmt = $conn->prepare("UPDATE clients SET email = ? WHERE id = ?");
-    $stmt->bind_param("si", $email, $client_id);
-
-    if ($stmt->execute()) {
-        $_SESSION['email'] = $email;
-        echo json_encode(["status" => "success", "message" => "<i class='fas fa-check-circle'></i> Email aggiornata con successo!"]);
-    } else {
-        echo json_encode(["status" => "error", "message" => "⚠️ Errore durante l'aggiornamento dell'email."]);
-    }
-    exit;
-}
-
+// Per la gestione dell'aggiornamento password
 if (!empty($data['password'])) {
     $new_password = trim($data['password']);
+    
     if (strlen($new_password) < 6) {
         echo json_encode(["status" => "error", "message" => "⚠️ La password deve contenere almeno 6 caratteri."]);
         exit;
     }
-
+    
+    // Verifica se la password è uguale a quella attuale
+    $stmt = $conn->prepare("SELECT password FROM clients WHERE id = ?");
+    $stmt->bind_param("i", $client_id);
+    $stmt->execute();
+    $stmt->bind_result($current_hashed_password);
+    $stmt->fetch();
+    $stmt->close();
+    
+    // Verifica se la nuova password corrisponde a quella esistente
+    if (password_verify($new_password, $current_hashed_password)) {
+        echo json_encode(["status" => "error", "message" => "⚠️ La nuova password non può essere uguale a quella attuale."]);
+        exit;
+    }
+    
     $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
     $stmt = $conn->prepare("UPDATE clients SET password = ? WHERE id = ?");
     $stmt->bind_param("si", $hashed_password, $client_id);

@@ -1,69 +1,82 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const notificaBtn = document.getElementById("notifica-btn");
-    const notificaBox = document.getElementById("notifica-box");
-    const notificaContenuto = document.getElementById("notifica-contenuto");
-    const chiudiNotifica = document.getElementById("chiudi-notifica");
-    const notificationDot = document.getElementById("new-lead-notification");
+  const notificaBtn = document.getElementById("notifica-btn");
+  const notificaBox = document.getElementById("notifica-box");
+  const notificaContenuto = document.getElementById("notifica-contenuto");
+  const chiudiNotifica = document.getElementById("chiudi-notifica");
+  const notificationDot = document.getElementById("new-lead-notification");
 
-    let newLeadsExist = false;
+  let newLeadsExist = false;
 
-    if (!notificaBtn || !notificaBox || !notificationDot) return;
+  if (!notificaBtn || !notificaBox || !notificationDot) return;
 
-    function checkNewLeads() {
-        fetch("includes/new-lead-alert.php")
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success" && data.new_leads > 0) {
-                    newLeadsExist = true;
+  function checkNewLeads() {
+    fetch("includes/new-lead-alert.php")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success" && data.new_leads > 0) {
+          newLeadsExist = true;
 
-                    const latestLeadTime = parseInt(data.leads[0].created_at);
-                    const lastReadTime = localStorage.getItem("lastReadLeadTime");
+          // Verifica se ci sono nuovi lead dall'ultima lettura
+          const lastReadTime = localStorage.getItem("lastReadLeadTime");
+          const lastLeadTime = new Date(data.leads[0].created_at).getTime();
 
-                    if (!lastReadTime || latestLeadTime > lastReadTime) {
-                        notificationDot.style.display = "block";
-                    }
+          if (!lastReadTime || lastLeadTime > parseInt(lastReadTime)) {
+            notificationDot.style.display = "block";
+          }
 
-                    let leadHtml = "";
-                    data.leads.slice(0, 5).forEach(lead => {
-                        leadHtml += `<div class="notifica-lead">
+          let leadHtml = "";
+          data.leads.slice(0, 5).forEach((lead) => {
+            leadHtml += `<div class="notifica-lead">
                             🟢 Nuovo lead da <span>${lead.name} ${lead.surname}</span><br>
                             <small>${lead.created_at}</small>
                         </div>`;
-                    });
+          });
 
-                    notificaContenuto.innerHTML = leadHtml;
-                } else {
-                    newLeadsExist = false;
-                    notificationDot.style.display = "none";
-                    notificaContenuto.innerHTML = "<p>Non hai nessuna novità.</p>";
-                }
-            })
-            .catch(error => console.error("Errore nel controllo nuovi lead:", error));
-    }
-
-    notificaBtn.addEventListener("click", function () {
-        notificaBox.classList.toggle("show");
-        checkNewLeads();
-
-        if (newLeadsExist) {
-            setTimeout(() => {
-                notificationDot.style.display = "none";
-                newLeadsExist = false;
-                localStorage.setItem("lastReadLeadTime", Date.now()); // AGGIORNA SOLO QUANDO L'UTENTE LEGGE
-            }, 3000);
+          notificaContenuto.innerHTML = leadHtml;
+        } else {
+          newLeadsExist = false;
+          notificationDot.style.display = "none";
+          notificaContenuto.innerHTML = `
+        <div style="text-align: center; padding: 15px 10px;">
+            <img src="assets/img/notification-box.svg" alt="Nessuna notifica" style="width: 90px; height: 80px; margin-bottom: 10px;">
+            <p style="font-weight: bold; margin-bottom: 5px;">Nessuna nuova notifica</p>
+            <p style="color: #777; font-size: 13px;">Non hai nuove notifiche al momento.</p>
+        </div>
+    `;
         }
-    });
+      })
+      .catch((error) =>
+        console.error("Errore nel controllo nuovi lead:", error)
+      );
+  }
 
-    document.addEventListener("click", function (event) {
-        if (!notificaBox.contains(event.target) && !notificaBtn.contains(event.target)) {
-            notificaBox.classList.remove("show");
-        }
-    });
-
-    chiudiNotifica.addEventListener("click", function () {
-        notificaBox.classList.remove("show");
-    });
-
-    setInterval(checkNewLeads, 10000);
+  notificaBtn.addEventListener("click", function () {
+    notificaBox.classList.toggle("show");
     checkNewLeads();
+
+    if (newLeadsExist) {
+      // Segna le notifiche come lette
+      localStorage.setItem("lastReadLeadTime", Date.now());
+      setTimeout(() => {
+        notificationDot.style.display = "none";
+      }, 3000);
+    }
+  });
+
+  document.addEventListener("click", function (event) {
+    if (
+      !notificaBox.contains(event.target) &&
+      !notificaBtn.contains(event.target)
+    ) {
+      notificaBox.classList.remove("show");
+    }
+  });
+
+  chiudiNotifica.addEventListener("click", function () {
+    notificaBox.classList.remove("show");
+  });
+
+  // Controlla i nuovi lead ogni 30 secondi
+  setInterval(checkNewLeads, 30000);
+  checkNewLeads(); // Controllo iniziale
 });

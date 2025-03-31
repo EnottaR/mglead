@@ -8,27 +8,31 @@ if (!isset($_SESSION['loggedin']) || !isset($_SESSION['user_id'])) {
 }
 
 $client_id = $_SESSION['user_id'];
-
 setlocale(LC_TIME, 'it_IT.UTF-8');
+
+// Data di una settimana fa
+$oneWeekAgo = date('Y-m-d H:i:s', strtotime('-1 week'));
 
 $stmt = $conn->prepare("
     SELECT p.name, p.surname, l.created_at 
     FROM leads l
     JOIN personas p ON l.personas_id = p.id
-    WHERE l.clients_id = ? AND l.status_id = 1
+    WHERE l.clients_id = ? 
+    AND l.status_id = 1
+    AND l.created_at > ?
     ORDER BY l.created_at DESC
 ");
-$stmt->bind_param("i", $client_id);
+$stmt->bind_param("is", $client_id, $oneWeekAgo);
 $stmt->execute();
 $result = $stmt->get_result();
 
 $leads = [];
 while ($row = $result->fetch_assoc()) {
-    $dataFormattata = strtotime($row['created_at']) * 1000; // il db è formattato in Y:m:d, la notifica non viene riconosciuta. Convertito in millisecondi
+    $dataFormattata = strftime("%d %b %H:%M", strtotime($row['created_at']));
     $leads[] = [
         "name" => $row['name'],
         "surname" => $row['surname'],
-        "created_at" => $dataFormattata // Passo il timestamp Unix in millisec
+        "created_at" => $dataFormattata
     ];    
 }
 

@@ -1,3 +1,33 @@
+function setupTabNavigation() {
+  const tabs = document.querySelectorAll('.settings-tab');
+  const panels = document.querySelectorAll('.settings-panel');
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      // Rimuovi la classe active da tutti i tab
+      tabs.forEach(t => t.classList.remove('active'));
+      
+      // Rimuovi la classe active da tutti i pannelli
+      panels.forEach(p => p.classList.remove('active'));
+      
+      // Aggiungi la classe active al tab cliccato
+      this.classList.add('active');
+      
+      // Attiva il pannello corrispondente
+      const panelId = this.getAttribute('data-tab') + '-panel';
+      document.getElementById(panelId).classList.add('active');
+    });
+  });
+}
+
+// Aggiungi questa chiamata nella funzione principale
+document.addEventListener("DOMContentLoaded", function () {
+  setupTabNavigation();
+  setupLogout();
+  setupStatusUpdate();
+  
+});
+
 function showNotification(message, type = "error") {
   const notificationContainer = document.getElementById("notification-container");
   
@@ -114,52 +144,79 @@ document.addEventListener("DOMContentLoaded", function () {
   setupEditField("edit-website-name-btn", "website-name-display", "website-name-edit-container", "user-website-name", "save-website-name-btn", "cancel-website-name-btn", "name");
   setupEditField("edit-website-url-btn", "website-url-display", "website-url-edit-container", "user-website-url", "save-website-url-btn", "cancel-website-url-btn", "url");
 
-  const editPasswordBtn = document.getElementById("edit-password-btn");
-  const passwordEditContainer = document.getElementById("password-edit-container");
-  const passwordInput = document.getElementById("user-password");
-  const savePasswordBtn = document.getElementById("save-password-btn");
-  const cancelPasswordBtn = document.getElementById("cancel-password-btn");
+const editPasswordBtn = document.getElementById("edit-password-btn");
+const passwordEditContainer = document.getElementById("password-edit-container");
+const passwordInput = document.getElementById("user-password");
+const savePasswordBtn = document.getElementById("save-password-btn");
+const cancelPasswordBtn = document.getElementById("cancel-password-btn");
 
-  if (editPasswordBtn && passwordEditContainer && passwordInput && savePasswordBtn && cancelPasswordBtn) {
-      editPasswordBtn.addEventListener("click", function () {
-          passwordEditContainer.style.display = "flex";
-          editPasswordBtn.style.display = "none";
-      });
+if (editPasswordBtn && passwordEditContainer && passwordInput && savePasswordBtn && cancelPasswordBtn) {
+    editPasswordBtn.addEventListener("click", function () {
+        passwordEditContainer.style.display = "flex";
+        editPasswordBtn.style.display = "none";
+        passwordInput.value = "";
+        passwordInput.focus(); // Metti il focus sul campo per comodità
+    });
 
-      cancelPasswordBtn.addEventListener("click", function () {
-          passwordEditContainer.style.display = "none";
-          editPasswordBtn.style.display = "inline-block";
-          passwordInput.value = "";
-      });
+    cancelPasswordBtn.addEventListener("click", function () {
+        passwordEditContainer.style.display = "none";
+        editPasswordBtn.style.display = "inline-block";
+        passwordInput.value = "";
+    });
 
-      savePasswordBtn.addEventListener("click", function () {
-          const newPassword = passwordInput.value.trim();
+    savePasswordBtn.addEventListener("click", function () {
+        const newPassword = passwordInput.value.trim();
 
-          if (!newPassword || newPassword.length < 6) {
-              showNotification("⚠️ La password deve contenere almeno 6 caratteri.", "error");
-              return;
-          }
+        if (!newPassword) {
+            showNotification("⚠️ Inserisci una password.", "error");
+            return;
+        }
+        
+        if (newPassword.length < 6) {
+            showNotification("⚠️ La password deve contenere almeno 6 caratteri.", "error");
+            return;
+        }
 
-          if (confirm("Vuoi aggiornare la password?")) {
-              fetch("includes/settings-update.php", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ password: newPassword }),
-              })
-              .then(response => response.json())
-              .then(data => {
-                  showNotification(data.message, data.status === "success" ? "success" : "error");
-                  if (data.status === "success") {
-                      passwordEditContainer.style.display = "none";
-                      editPasswordBtn.style.display = "inline-block";
-                      passwordInput.value = "";
-                  }
-              })
-              .catch(error => {
-                  console.error("Errore:", error);
-                  showNotification("⚠️ Errore durante l'aggiornamento della password.", "error");
-              });
-          }
-      });
-  }
+        // Aggiunto spinner o indicazione di caricamento
+        savePasswordBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifico...';
+        savePasswordBtn.disabled = true;
+
+        fetch("includes/settings-update.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ password: newPassword }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            showNotification(data.message, data.status === "success" ? "success" : "error");
+            
+            // Ripristina il pulsante
+            savePasswordBtn.innerHTML = '<i class="fas fa-save"></i> Salva';
+            savePasswordBtn.disabled = false;
+            
+            if (data.status === "success") {
+                passwordEditContainer.style.display = "none";
+                editPasswordBtn.style.display = "inline-block";
+                passwordInput.value = "";
+            }
+        })
+        .catch(error => {
+            console.error("Errore:", error);
+            showNotification("⚠️ Errore durante l'aggiornamento della password.", "error");
+            
+            // Ripristina il pulsante
+            savePasswordBtn.innerHTML = '<i class="fas fa-save"></i> Salva';
+            savePasswordBtn.disabled = false;
+        });
+    });
+}
+	const togglePasswordVisibility = document.getElementById("toggle-password-visibility");
+if (togglePasswordVisibility && passwordInput) {
+    togglePasswordVisibility.addEventListener("click", function() {
+        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput.setAttribute("type", type);
+        this.classList.toggle("fa-eye");
+        this.classList.toggle("fa-eye-slash");
+    });
+}
 });

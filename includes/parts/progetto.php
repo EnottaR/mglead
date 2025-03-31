@@ -10,6 +10,14 @@ if (!isset($_SESSION['loggedin']) || !isset($_SESSION['user_id'])) {
 
 $client_id = $_SESSION['user_id'];
 
+// Recupera la chiave di crittografia dell'utente
+$stmt = $conn->prepare("SELECT encryption_key FROM clients WHERE id = ?");
+$stmt->bind_param("i", $client_id);
+$stmt->execute();
+$stmt->bind_result($encryption_key);
+$stmt->fetch();
+$stmt->close();
+
 // Array con ID per i conteggi
 $status_counts = [
     "totale_nuovi_lead" => 1,
@@ -120,7 +128,15 @@ $status_stmt->close();
         </div>
     </div>
 	    <div class="view-actions">
-        <button class="view-btn list-view" title="List View">
+			<button id="reset-order" class="view-btn" title="Ripristina ordine originale">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 2v6h6"></path>
+        <path d="M3 8C5.33333 5.33333 8.33333 4 12 4c7.3333 0 10 5.33333 10 8 0 1.3333-.6667 2.6667-2 4"></path>
+        <path d="M21 22v-6h-6"></path>
+        <path d="M21 16c-2.3333 2.6667-5.3333 4-9 4-7.3333 0-10-5.3333-10-8 0-1.3333.6667-2.6667 2-4"></path>
+    </svg>
+</button>
+        <button class="view-btn list-view" title="Visualizza a lista">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
                 <line x1="8" y1="6" x2="21" y2="6" />
                 <line x1="8" y1="12" x2="21" y2="12" />
@@ -130,7 +146,7 @@ $status_stmt->close();
                 <line x1="3" y1="18" x2="3.01" y2="18" />
             </svg>
         </button>
-        <button class="view-btn grid-view active" title="Grid View">
+        <button class="view-btn grid-view active" title="Visualizza in griglia">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">
                 <rect x="3" y="3" width="7" height="7" />
                 <rect x="14" y="3" width="7" height="7" />
@@ -169,7 +185,7 @@ $status_stmt->close();
         $status_label = htmlspecialchars($status_options[$lead['status_id']] ?? 'null');
         $decryptedMessage = htmlspecialchars(decryptData($lead['message'], $lead['iv'], $encryption_key));
     ?>
-        <div class="project-box-wrapper">
+        <div class="project-box-wrapper" data-lead-id="<?= $lead['id']; ?>">
             <div class="project-box <?= $status_class; ?>">
                 <div class="project-box-header">
                     <?php
@@ -180,7 +196,12 @@ $status_stmt->close();
                 </div>
                 <div class="project-box-content-header">
                     <p class="box-content-header"><?= htmlspecialchars($lead['name'] . ' ' . strtoupper(substr($lead['surname'], 0, 1)) . '.'); ?></p>
-                    <p class="box-content-subheader"><?= $decryptedMessage; ?></p>
+                    <?php
+    $shortMessage = (strlen($decryptedMessage) > 30) 
+        ? substr($decryptedMessage, 0, 30) . "..." 
+        : $decryptedMessage;
+?>
+<p class="box-content-subheader"><?= $shortMessage; ?></p>
                 </div>
                 <!-- <div class="box-progress-wrapper">
                     <p class="box-progress-header">Status</p>

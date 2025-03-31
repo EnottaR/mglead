@@ -1079,185 +1079,6 @@ a {
     display: none;
 }
 
-@media screen and (max-width: 980px) {
-    .project-boxes.jsGridView .project-box-wrapper {
-        width: 50%;
-    }
-
-    .status-number,
-    .status-type {
-        font-size: 14px;
-    }
-
-    .status-type:after {
-        width: 4px;
-        height: 4px;
-    }
-
-    .item-status {
-        margin-right: 0;
-    }
-}
-
-@media screen and (max-width: 880px) {
-    .messages-section {
-        transform: translateX(100%);
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        z-index: 2;
-        height: 100%;
-        width: 100%;
-    }
-
-    .messages-section .messages-close {
-        display: block;
-    }
-
-    .messages-btn {
-        display: flex;
-    }
-}
-
-@media screen and (max-width: 720px) {
-
-    .app-nome,
-    .profilo-btn span {
-        display: none;
-    }
-
-    .add-btn,
-    .notifica-btn,
-    .switch-mode {
-        width: 20px;
-        height: 20px;
-    }
-
-    .add-btn svg,
-    .notifica-btn svg,
-    .switch-mode svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    .app-header-destra button {
-        margin-left: 4px;
-    }
-}
-
-@media screen and (max-width: 520px) {
-    .projects-section {
-        overflow: auto;
-    }
-
-    .project-boxes {
-        overflow-y: visible;
-    }
-
-    .app-sidebar,
-    .app-icon {
-        display: block;
-    }
-
-    .app-content {
-        padding: 16px 12px 24px 12px;
-    }
-
-    .status-number,
-    .status-type {
-        font-size: 10px;
-    }
-
-    .view-btn {
-        width: 24px;
-        height: 24px;
-    }
-
-    .app-header {
-        padding: 16px 10px;
-    }
-
-    .search-input {
-        max-width: 120px;
-    }
-
-    .project-boxes.jsGridView .project-box-wrapper {
-        width: 100%;
-    }
-
-    .projects-section {
-        padding: 24px 16px 0 16px;
-    }
-
-    .profilo-btn img {
-        width: 24px;
-        height: 24px;
-    }
-
-    .app-header {
-        padding: 10px;
-    }
-
-    .projects-section-header p,
-    .projects-section-header .tempo {
-        font-size: 18px;
-    }
-
-    .status-type {
-        padding-right: 4px;
-    }
-
-    .status-type:after {
-        display: none;
-    }
-
-    .search-input {
-        font-size: 14px;
-    }
-
-    .messages-btn {
-        top: 48px;
-    }
-
-    .box-content-header {
-        font-size: 12px;
-        line-height: 16px;
-    }
-
-    .box-content-subheader {
-        font-size: 12px;
-        line-height: 16px;
-    }
-
-    .project-boxes.jsListView .project-box-header>span {
-        font-size: 10px;
-    }
-
-    .box-progress-header {
-        font-size: 12px;
-    }
-
-    .box-progress-percentage {
-        font-size: 10px;
-    }
-
-    .days-left {
-        font-size: 8px;
-        padding: 6px 6px;
-        text-align: center;
-    }
-
-    .project-boxes.jsListView .project-box>* {
-        margin-right: 10px;
-    }
-
-    .project-boxes.jsListView .more-wrapper {
-        right: 2px;
-        top: 10px;
-    }
-}
-
-
 .sezione-impostazioni {
     display: flex;
     flex-wrap: wrap;
@@ -1273,12 +1094,12 @@ a {
 }
 
 .settings-column-left {
-    width: 20%;
+    width: 50%;
     font-weight: bold;
 }
 
 .settings-column-right {
-    width: 30%;
+    width: 100%;
 }
 
 .settings-input {
@@ -1287,6 +1108,7 @@ a {
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
+	margin-right: 10px;
 }
 
 .btn-primary {
@@ -1925,14 +1747,26 @@ td.lead-messaggio {
     display: none;
 }
 
-.status-1 { background-color: #68de67; }
-.status-2 { background-color: #ff694f; }
-.status-3 { background-color: #ff694f; }
-.status-4 { background-color: #ff694f; }
-.status-5 { background-color: #ff8420; }
+.status-1 { background-color: #baf8ca; }
+.status-2 { background-color: #ff9d9d; }
+.status-3 { background-color: #ff9d9d; }
+.status-4 { background-color: #ff9d9d; }
+.status-5 { background-color: #ffeebc; }
 .status-6 { background-color: #6783de; }
-.status-7 { background-color: #22b343; }
+.status-7 { background-color: #7effff; }
 
+.status-1 {
+	color: #007f21;
+}
+.status-2 {
+	color: #a90000;
+}
+.status-5 {
+	color: #b75200;
+}
+.status-7 {
+	color: #000e65;
+}
 .status-select option {
     background-color: white;
     color: black;
@@ -1942,7 +1776,6 @@ td.lead-messaggio {
     top: 20px;
     right: 20px;
     background: rgba(0, 180, 0, 0.9);
-    color: white;
     padding: 10px 15px;
     border-radius: 5px;
     z-index: 1000;
@@ -2000,23 +1833,28 @@ td.lead-messaggio {
 
 /* DASHBOARD */
 
-.status-new-lead { background-color: #b1ffae; }
-.status-no-response { background-color: #ff7373; }
-.status-in-progress { background-color: #fdc288; }
-.status-quote-sent { background-color: #91a9f7; }
-.status-contract-sent { background-color: #49ed6e; }
+.status-new-lead { background-color: #baf8ca; }
+.status-no-response { background-color: #ff9d9d; }
+.status-in-progress { background-color: #ffeebc; }
+.status-quote-sent { background-color: #7effff; }
+.status-contract-sent { background-color: #7effff; }
 
 
 /* FINE DASHBOARD */
 
+
 #download-csv {
-    background-color: #179e54;
+    background: linear-gradient(to right, #179e54, #1dca6b);
+    background-size: 200% 100%;
+    background-position: left center;
     border: none;
     color: #fff;
     font-weight: 500;
+    transition: background-position 0.5s ease;
 }
+
 #download-csv:hover {
-    background-color: #1dca6b;
+    background-position: right center;
 }
 
 .notifica-box {
@@ -2104,5 +1942,424 @@ td.lead-messaggio {
     border-radius: 50%;
 }
 
+.settings-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--message-box-border);
+  padding-bottom: 15px;
+}
+
+.settings-tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--secondary-color);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.settings-tab:hover {
+  background-color: var(--link-color-hover);
+}
+
+.settings-tab.active {
+  background-color: var(--link-color-active-bg);
+  color: var(--link-color-active);
+}
+
+.settings-panel {
+  display: none;
+}
+
+.settings-panel.active {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.settings-subtitle {
+  margin-top: -5px;
+  margin-bottom: 25px;
+  color: var(--secondary-color);
+  font-size: 16px;
+  font-weight: normal;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.settings-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--message-box-border);
+}
 
 /* FINE TABELLA LEAD */
+
+/* Layout a colonne per le impostazioni */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.settings-row.full-width {
+  grid-column: 1 / -1;
+}
+
+.settings-box {
+  background-color: var(--projects-section);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.dark .settings-box {
+  background-color: var(--button-bg);
+}
+
+.settings-box h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: var(--main-color);
+}
+
+.settings-footer {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--message-box-border);
+}
+
+.float-label-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.float-label-container input {
+  height: 50px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--message-box-border);
+  background-color: transparent;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  color: var(--main-color);
+}
+
+.float-label-container input:focus {
+  outline: none;
+  border-color: var(--link-color-active-bg);
+  box-shadow: 0 0 0 1px var(--link-color-active-bg);
+}
+
+.float-label-container label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  font-size: 16px;
+  color: var(--secondary-color);
+  padding: 0 5px;
+}
+
+.float-label-container input:focus + label,
+.float-label-container input:not(:placeholder-shown) + label {
+  top: 0;
+  transform: translateY(-50%) scale(0.9);
+  background-color: var(--projects-section);
+  z-index: 1;
+}
+
+.dark .float-label-container input:focus + label,
+.dark .float-label-container input:not(:placeholder-shown) + label {
+  background-color: var(--button-bg);
+}
+
+.float-label-container input::placeholder {
+  color: transparent;
+}
+
+.float-label-container .settings-input {
+  height: auto;
+}
+
+.sortable-ghost {
+    opacity: 0.4;
+    transform: scale(0.95);
+}
+
+.sortable-chosen {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+    transform: scale(1.02);
+    z-index: 10;
+}
+
+.sortable-drag {
+    cursor: grabbing !important;
+}
+
+.project-box-header {
+    cursor: grab;
+}
+
+.project-box {
+    transition: all 0.3s ease-in-out;
+}
+
+.dragging .project-box:not(.sortable-chosen):not(.sortable-ghost) {
+    transform: scale(0.98);
+}
+
+.sortable-ghost {
+    opacity: 0.4;
+    transform: scale(0.95);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.sortable-chosen {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+    transform: scale(1.02);
+    z-index: 10;
+}
+
+.sortable-drag {
+    cursor: grabbing !important;
+}
+
+.jsGridView .project-box-header {
+    cursor: grab;
+}
+
+.jsListView .project-box-header {
+    cursor: grab;
+}
+
+.project-box {
+    transition: all 0.3s ease-in-out;
+}
+
+.dragging .project-box:not(.sortable-chosen):not(.sortable-ghost) {
+    transform: scale(0.98);
+}
+
+.order-saved-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(45, 188, 92, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+.order-saved-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dark .order-saved-notification {
+    background-color: rgba(45, 188, 92, 0.8);
+}
+
+/* QUERY RESPONSIVE */
+@media (max-width: 768px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+	@media screen and (max-width: 980px) {
+    .project-boxes.jsGridView .project-box-wrapper {
+        width: 50%;
+    }
+
+    .status-number,
+    .status-type {
+        font-size: 14px;
+    }
+
+    .status-type:after {
+        width: 4px;
+        height: 4px;
+    }
+
+    .item-status {
+        margin-right: 0;
+    }
+}
+
+@media screen and (max-width: 880px) {
+    .messages-section {
+        transform: translateX(100%);
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        z-index: 2;
+        height: 100%;
+        width: 100%;
+    }
+
+    .messages-section .messages-close {
+        display: block;
+    }
+
+    .messages-btn {
+        display: flex;
+    }
+}
+
+@media screen and (max-width: 720px) {
+
+    .app-nome,
+    .profilo-btn span {
+        display: none;
+    }
+
+    .add-btn,
+    .notifica-btn,
+    .switch-mode {
+        width: 20px;
+        height: 20px;
+    }
+
+    .add-btn svg,
+    .notifica-btn svg,
+    .switch-mode svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .app-header-destra button {
+        margin-left: 4px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .projects-section {
+        overflow: auto;
+    }
+
+    .project-boxes {
+        overflow-y: visible;
+    }
+
+    .app-sidebar,
+    .app-icon {
+        display: block;
+    }
+
+    .app-content {
+        padding: 16px 12px 24px 12px;
+    }
+
+    .status-number,
+    .status-type {
+        font-size: 10px;
+    }
+
+    .view-btn {
+        width: 24px;
+        height: 24px;
+    }
+
+    .app-header {
+        padding: 16px 10px;
+    }
+
+    .search-input {
+        max-width: 120px;
+    }
+
+    .project-boxes.jsGridView .project-box-wrapper {
+        width: 100%;
+    }
+
+    .projects-section {
+        padding: 24px 16px 0 16px;
+    }
+
+    .profilo-btn img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .app-header {
+        padding: 10px;
+    }
+
+    .projects-section-header p,
+    .projects-section-header .tempo {
+        font-size: 18px;
+    }
+
+    .status-type {
+        padding-right: 4px;
+    }
+
+    .status-type:after {
+        display: none;
+    }
+
+    .search-input {
+        font-size: 14px;
+    }
+
+    .messages-btn {
+        top: 48px;
+    }
+
+    .box-content-header {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .box-content-subheader {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .project-boxes.jsListView .project-box-header>span {
+        font-size: 10px;
+    }
+
+    .box-progress-header {
+        font-size: 12px;
+    }
+
+    .box-progress-percentage {
+        font-size: 10px;
+    }
+
+    .days-left {
+        font-size: 8px;
+        padding: 6px 6px;
+        text-align: center;
+    }
+
+    .project-boxes.jsListView .project-box>* {
+        margin-right: 10px;
+    }
+
+    .project-boxes.jsListView .more-wrapper {
+        right: 2px;
+        top: 10px;
+    }
+}

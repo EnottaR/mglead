@@ -4,10 +4,12 @@ session_start();
 <div class="app-header">
     <div class="app-header-sinistra">
         <span id="menu-toggle" class="app-icon"></span>
-        <p class="app-nome">LeadAI</p>
+        <p class="app-nome" style="margin-right: 5px;">LeadAI</p>
+		<!-- controllo di versione, rimuovere al termine -->
+        <p style="font-size: 10px; color: var(--secondary-color); align-self: flex-end; margin: 0 15px 5px 0;">Ver. 0.8 - Main Build</p>
+		<!-- controllo di versione, rimuovere al termine -->
         <div class="search-wrapper">
             <input class="search-input" type="text" placeholder="Cerca">
-            <!-- aggiornare con funzione di ricerca corretta -->
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search"
                 viewBox="0 0 24 24">

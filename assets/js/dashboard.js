@@ -1,4 +1,3 @@
-// Modalità Dark
 document.addEventListener("DOMContentLoaded", function () {
     var modeSwitch = document.querySelector(".switch-mode");
     var tooltipText = modeSwitch.querySelector(".tooltip-text");
@@ -15,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   
-    // Controlla se l'utente ha già salvato il tema
     if (localStorage.getItem("theme") === "dark") {
       document.documentElement.classList.add("dark");
       tooltipText.textContent = "Passa alla modalità chiara";
@@ -55,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
       projectsList.classList.add("jsGridView");
     });
   
-    // Sezione Messaggi
     document
       .querySelector(".messages-btn")
       .addEventListener("click", function () {
@@ -81,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
   
-  // Funzione upload avatar - DA FINIRE
+  // Funzione upload avatar - DEPRECATO / NON UTILIZZATO
   document.addEventListener("DOMContentLoaded", function () {
     const avatarUpload = document.getElementById("avatar-upload");
     const avatarPreview = document.getElementById("avatar-preview");
@@ -111,17 +108,16 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-  // Fine Avatar
+
   document.addEventListener("DOMContentLoaded", function () {
     var menuToggle = document.getElementById("menu-toggle");
     var sidebar = document.querySelector(".app-sidebar");
 
     if (menuToggle && sidebar) {
         menuToggle.addEventListener("click", function () {
-            sidebar.classList.toggle("active"); // Mostra/nasconde la sidebar
+            sidebar.classList.toggle("active");
         });
 
-        // Chiude la sidebar se si clicca fuori
         document.addEventListener("click", function (event) {
             if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
                 sidebar.classList.remove("active");
@@ -136,15 +132,151 @@ function showNotification(message, type = "success") {
     notification.classList.add("notification", type);
     notification.innerHTML = `${message} <span style="cursor:pointer;">✖</span>`;
 
-    // Rimuovi la notifica manualmente al clic
     notification.querySelector("span").addEventListener("click", () => {
         notification.remove();
     });
 
     notificationContainer.appendChild(notification);
 
-    // Rimuovi automaticamente dopo 5 secondi
     setTimeout(() => {
         notification.remove();
     }, 5000);
+}
+
+/*DRAGNDROP */
+document.addEventListener("DOMContentLoaded", function() {
+    const projectBoxContainer = document.querySelector('.project-boxes');
+    if (!projectBoxContainer) return;
+    
+    const gridViewBtn = document.querySelector('.grid-view');
+    const listViewBtn = document.querySelector('.list-view');
+    
+    const savedOrder = localStorage.getItem('leadOrder');
+    if (savedOrder) {
+        try {
+            const orderArray = JSON.parse(savedOrder);
+            
+            const currentItems = Array.from(projectBoxContainer.children);
+            const orderedItems = [];
+            
+            orderArray.forEach(id => {
+                const item = currentItems.find(el => el.getAttribute('data-lead-id') === id.toString());
+                if (item) {
+                    orderedItems.push(item);
+                    item.parentNode.removeChild(item);
+                }
+            });
+            
+            Array.from(projectBoxContainer.children).forEach(item => {
+                orderedItems.push(item);
+            });
+            
+            while (projectBoxContainer.firstChild) {
+                projectBoxContainer.removeChild(projectBoxContainer.firstChild);
+            }
+            
+            orderedItems.forEach(item => {
+                projectBoxContainer.appendChild(item);
+            });
+            
+        } catch (e) {
+            console.error('Errore nel ripristino dell\'ordine:', e);
+            localStorage.removeItem('leadOrder');
+        }
+    }
+
+    let sortableInstance = new Sortable(projectBoxContainer, {
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'sortable-chosen',
+        dragClass: 'sortable-drag',
+        handle: '.project-box-header',
+        onStart: function() {
+            document.body.classList.add('dragging');
+        },
+        onEnd: function(evt) {
+            document.body.classList.remove('dragging');
+            
+            salvaOrdine();
+        }
+    });
+
+    if (gridViewBtn && listViewBtn) {
+        gridViewBtn.addEventListener('click', function() {
+            if (sortableInstance) {
+                sortableInstance.destroy();
+            }
+            
+            setTimeout(() => {
+                sortableInstance = new Sortable(projectBoxContainer, {
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    chosenClass: 'sortable-chosen',
+                    dragClass: 'sortable-drag',
+                    handle: '.project-box-header',
+                    onStart: function() {
+                        document.body.classList.add('dragging');
+                    },
+                    onEnd: function() {
+                        document.body.classList.remove('dragging');
+                        salvaOrdine();
+                    }
+                });
+            }, 300);
+        });
+
+        listViewBtn.addEventListener('click', function() {
+            if (sortableInstance) {
+                sortableInstance.destroy();
+            }
+            
+            setTimeout(() => {
+                sortableInstance = new Sortable(projectBoxContainer, {
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    chosenClass: 'sortable-chosen',
+                    dragClass: 'sortable-drag',
+                    handle: '.project-box-header',
+                    onStart: function() {
+                        document.body.classList.add('dragging');
+                    },
+                    onEnd: function() {
+                        document.body.classList.remove('dragging');
+                        salvaOrdine();
+                    }
+                });
+            }, 300);
+        });
+    }
+    
+    function salvaOrdine() {
+        const boxes = document.querySelectorAll('.project-box-wrapper');
+        const idArray = Array.from(boxes).map(box => box.getAttribute('data-lead-id'));
+        localStorage.setItem('leadOrder', JSON.stringify(idArray));
+        
+        const notification = document.createElement('div');
+        notification.classList.add('order-saved-notification');
+        notification.textContent = 'Ordine aggiornato';
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 1500);
+        }, 10);
+    }
+});
+
+const resetOrderBtn = document.getElementById('reset-order');
+if (resetOrderBtn) {
+    resetOrderBtn.addEventListener('click', function() {
+        if (confirm('Vuoi ripristinare l\'ordine originale dei lead?')) {
+            localStorage.removeItem('leadOrder');
+            location.reload();
+        }
+    });
 }
