@@ -1,36 +1,36 @@
-LeadAI: Lead Management Platform
-🚀 Overview
-LeadAI is a comprehensive lead management platform designed to help businesses track, manage, and convert potential customer inquiries efficiently. Built with a focus on security, user experience, and functionality, LeadAI provides a robust solution for managing leads across various stages of the sales funnel.
-✨ Key Features
-🔒 Security
+# LeadAI: Piattaforma di Gestione dei Lead
+🚀 Panoramica
+LeadAI è una piattaforma completa di gestione dei lead progettata per aiutare le aziende a tracciare, gestire e convertire in modo efficiente i potenziali contatti dei clienti. Costruita con un focus sulla sicurezza, l'esperienza utente e la funzionalità, LeadAI offre una soluzione robusta per la gestione dei lead in diverse fasi del processo di vendita.
+✨ Funzionalità Principali
+🔒 Sicurezza
 
-End-to-end encryption of sensitive lead data
-Secure user authentication
-CSRF protection
-Unique encryption keys for each client
+Crittografia end-to-end dei dati sensibili dei lead
+Autenticazione utente sicura
+Protezione CSRF
+Chiavi di crittografia univoche per ogni cliente
 
-📊 Lead Management
+📊 Gestione dei Lead
 
-Real-time lead tracking
-Customizable lead statuses
-Encrypted lead information storage
-Easy status updates and filtering
-CSV export functionality
+Tracciamento dei lead in tempo reale
+Stati dei lead personalizzabili
+Archiviazione dei dati dei lead crittografati
+Aggiornamento e filtro degli stati facilitato
+Esportazione in formato CSV
 
-🖥️ User Interface
+🖥️ Interfaccia Utente
 
-Dark/Light mode
-Responsive design
-Intuitive dashboard
-Calendar integration
-Notification system
+Modalità scura/chiara
+Design responsive
+Dashboard intuitiva
+Integrazione calendario
+Sistema di notifiche
 
-🛠 Tech Stack
+🛠 Stack Tecnologico
 Frontend
 
 HTML5
 CSS3
-Vanilla JavaScript
+JavaScript Vanilla
 FullCalendar
 Font Awesome
 
@@ -38,76 +38,39 @@ Backend
 
 PHP
 MySQL
-PDO for database interactions
-OpenSSL for encryption
+PDO per interazioni con il database
+OpenSSL per la crittografia
 
-Security Technologies
+Tecnologie di Sicurezza
 
-bcrypt password hashing
-AES-256-CBC encryption
-CSRF token generation
-Prepared statements
+Hashing delle password con bcrypt
+Crittografia AES-256-CBC
+Generazione di token CSRF
+Statement preparati
 
-📦 Installation
-Prerequisites
-
+📦 Requisiti
 PHP 7.4+
 MySQL 5.7+
-Web server (Apache/Nginx)
+Server web (Apache/Nginx)
 
-Setup Steps
+🔐 Configurazione dell'Ambiente
 
-Clone the repository
-Import the database schema
-Configure db.php with your database credentials
-Set up appropriate file permissions
-Configure your web server
+Connessione al database in db.php
+Logica di autenticazione in includes/auth.php
+Utility di crittografia in includes/functions/decrypt.php
 
-🔐 Environment Configuration
+📝 Logging e Monitoraggio
 
-Database connection in db.php
-Authentication logic in includes/auth.php
-Encryption utilities in includes/functions/decrypt.php
+Tracciamento dei cambiamenti di stato dei lead
+Logging dei dati crittografati
+Meccanismi di notifica per i nuovi lead
 
-🚦 Security Best Practices
+🔮 Funzionalità Future
 
-Input sanitization
-Parameterized queries
-Encryption of sensitive data
-CSRF protection
-Session management
-Password hashing
+Notifiche SMS in partnership con SMSSender
+Template Email Avanzati
+Reportistica Avanzata
+Supporto Multilingua
 
-📝 Logging and Monitoring
-
-Lead status change tracking
-Encrypted data logging
-Notification mechanisms for new leads
-
-🌐 Supported Browsers
-
-Chrome
-Firefox
-Safari
-Edge
-
-🔮 Upcoming Features
-
-SMS Notifications
-Enhanced Email Templates
-Advanced Reporting
-Multi-language Support
-
-💡 Contributing
-
-Fork the repository
-Create your feature branch (git checkout -b feature/AmazingFeature)
-Commit your changes (git commit -m 'Add some AmazingFeature')
-Push to the branch (git push origin feature/AmazingFeature)
-Open a Pull Request
-
-📜 License
-Distributed under the MIT License. See LICENSE for more information.
-🤝 Contact
-Project Lead: [Your Name]
-Email: support@leadai.com
+📜 Licenza
+Distribuito sotto la Licenza MIT.
